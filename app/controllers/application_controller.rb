@@ -32,15 +32,20 @@ class ApplicationController < Sinatra::Base
 
   get '/articles/:id/edit' do
     @edit = Article.find(params[:id])
-    binding.pry
+    
     erb :edit
   end
   
   patch '/articles/:id' do 
     @edit = Article.find(params[:id])
-    @edit.update(params[:article])
+    @edit.update(title: params[:title], content: params[:content])
+    redirect to "/articles/#{@edit.id}"
   end
 
+  delete '/articles/:id' do
+    @deleted = Article.find(params[:id])
+    @deleted.delete
+  end
   
 
   #erb :show - displays an individual article
